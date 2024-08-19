@@ -1,3 +1,6 @@
+if(process.env.NODE_ENV != "production")
+  require('dotenv').config()
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -26,6 +29,11 @@ app.use('/users', usersRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+app.use((res, req, next) => {
+  console.log('Ben middleware');
+  next;
+})
 
 // error handler
 app.use(function(err, req, res, next) {
